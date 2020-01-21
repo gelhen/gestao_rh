@@ -19,7 +19,7 @@ class FuncionarioEdit(UpdateView):
 
 class FuncionarioDelete(DeleteView):
     model = Funcionario
-    #não deixa concatenar a url
+    #reverse_lazy não deixa concatenar a url
     success_url = reverse_lazy('list_funcionarios')
 
 class FuncionarioCreate(CreateView):
