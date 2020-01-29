@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load bootstrap %}
+
+{% block main %}
+
+    Banco de Horas
+<br>
+    {% for registro_re in object_list %}
+            {{ registro_re }}
+<!--        <a href="">-->
+<!--            {{ funcionario }}-->
+<!--        </a>-->
+<!--        <a href="' funcionario.id %}">-->
+<!--            Deletar-->
+<!--        </a>-->
+        <br>
+    {% endfor %}
+<!--    <a href="" class="btn btn-info">Novo</a>a-->
+{% endblock %}
