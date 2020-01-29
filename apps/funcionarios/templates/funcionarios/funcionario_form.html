@@ -15,4 +15,9 @@ Edit
 <br>
 <a href="{% url 'create_documento' object.id %}" class="btn btn-success">Adicionar Documento</a>
 
+{% for documento in object.documento_set.all %}
+    <br>
+    <a href="{{ documento.arquivo.url }}">{{ documento }}</a>
+{% endfor %}
+
 {% endblock %}
