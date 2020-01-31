@@ -7,9 +7,9 @@
 <br>
     {% for registro_re in object_list %}
             {{ registro_re }}
-<!--        <a href="">-->
-<!--            {{ funcionario }}-->
-<!--        </a>-->
+        <a href="{% url 'update_hora_extra' registro_re.id %}">
+            {{ registro_re }}
+        </a>
 <!--        <a href="' funcionario.id %}">-->
 <!--            Deletar-->
 <!--        </a>-->
