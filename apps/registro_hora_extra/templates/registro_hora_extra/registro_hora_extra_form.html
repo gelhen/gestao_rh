@@ -11,9 +11,11 @@ Edit
     {{ form|bootstrap }}
 
     <button type="submit" class="btn btn-main">Salvar</button>
-    <a href="{% url 'delete_hora_extra' object.id %}" class="btn btn-danger">
-        Deletar
-    </a>
+    {% if object %}
+        <a href="{% url 'delete_hora_extra' object.id %}" class="btn btn-danger">
+            Deletar
+        </a>
+    {% endif %}
 </form>
 <br>
 {% endblock %}
