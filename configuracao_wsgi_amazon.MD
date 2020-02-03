@@ -146,3 +146,42 @@ server {
  ```
  sudo ln -s /etc/nginx/sites-available/gestao_rh.conf /etc/nginx/sites-enabled/gestao_rh.con
  ```
+
+## 10.4 Incluir o STATICROOT no settings do projeto
+
+````
+STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+````
+##### 10.4.1
+````
+python manage.py collectstatic
+````
+
+##10.5 Restart nginx:
+
+```
+sudo /etc/init.d/nginx restart
+```
+## 10.6 Testar com Unix sockets
+No arquivo gestao_rh.conf, descomentar a linha server unix.....
+e comentar a server 127.0.0.1....
+
+````
+server unix:///path/to/your/mysite/mysite.sock; # for a file socket
+# server 127.0.0.1:8001; # for a web port socket (we'll use this first)
+````
+#### 10.6.1 Testar 
+
+````
+uwsgi --socket gestao_rh/mysite.sock --wsgi-file test.py
+
+````
+case apresente erro acrescentar a 
+`--chmod-socket=666 # (very permissive)` ou `--chmod-socket=666 # (very permissive)` 
+no fina do comendo
+
+## 11 Roddar aplicação DJango
+
+````
+uwsgi --socket mysite.sock --module gestao_rh.wsgi --chmod-socket=666
+````
