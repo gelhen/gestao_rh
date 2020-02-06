@@ -183,5 +183,72 @@ no fina do comendo
 ## 11 Roddar aplicação DJango
 
 ````
-uwsgi --socket mysite.sock --module gestao_rh.wsgi --chmod-socket=666
+    uwsgi --socket mysite.sock --module gestao_rh.wsgi --chmod-socket=666
+````
+## 12 Criar arquivo de inicialização
+
+Dentro da pasta do projeto, criar um arquivo com o nome uwsgi.ini
+
+```
+[uwsgi]
+
+chdir           = /home/ubuntu/gestao_rh
+module          = gestao_rh.wsgi
+home            = /home/ubuntu/.venv
+master          = true
+processes       = 10
+socket          = /home/ubuntu/gestao_rh/mysite.sock
+vacuum          = true
+chmod-socket    = 666
+``` 
+
+## 13 Teste para rodar o projeto
+
+```
+uwsgi --ini uwsgi.ini
+```
+
+## 14 Configurando o systemctl para start no boot
+
+Na pasta raiz /home/ubuntu, criar um arquivo, uwsgi.sh
+
+````
+#!/bin/bash
+/home/ubuntu/.venv/bin/uwsgi --emperor /etc/uwsgi/vassals --uid www-data --gid www-data
+````
+Dar permissão de execução para o arquivo
+
+````
+sudo chmod 744 uwsgi.sh
+````
+
+Criar um arquivo gestao_rh.service dentro do diretório /etc/systemd/system
+com o conteúdo abaixo.
+````
+[Unit]
+Description=uWSGI modo Emperor
+After=network.target
+
+[Service]
+ExecStart=/home/ubuntu/uwsgi.sh
+Type=forking
+User=ubuntu
+[Install]
+WantedBy=default.target
+
+````
+````
+sudo vim /etc/systemd/system/gestao_rh.service
+sudo chmod 666 /etc/systemd/system/gestao_rh.service
+````
+Reload no processo
+Vai pedir a senha do ubuntu, para teste cadastrei senha 123456
+
+````
+systemctl daemon-reload
+systemctl enable gestao_rh.service
+````
+Por fim iniciar o serviço
+````
+systemctl start gestao_rh.service
 ````
