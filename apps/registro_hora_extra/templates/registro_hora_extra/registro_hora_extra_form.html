@@ -14,8 +14,11 @@
         <a href="{% url 'delete_hora_extra' object.id %}" class="btn btn-danger">
             Deletar
         </a>
-        <button onclick="utilizouHoraExtra({{object.id}})" class="btn btn-info" type="button">
+        <button onclick="utilizouHoraExtra({{object.id}}, 'True')" class="btn btn-info" type="button">
             Utilizou Hora Extra
+        </button>
+        <button onclick="utilizouHoraExtra({{object.id}}, 'False')" class="btn btn-danger" type="button">
+           Não Utilizou Hora Extra
         </button>
     {% endif %}
 </form>

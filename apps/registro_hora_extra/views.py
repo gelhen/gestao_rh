@@ -66,15 +66,18 @@ class HoraExtraCreate(CreateView):
 
 class UtilizouHoraExtra(View):
     def post(self, *args, **kwargs):
+        utilizada = self.request.POST['utilizada']
         registro_hora_extra = Registro_hora_extra.objects.get(id=kwargs['pk'])
-        registro_hora_extra.utilizada = True
+        registro_hora_extra.utilizada = utilizada
         registro_hora_extra.save()
 
         empregado = self.request.user.funcionario
 
         response = json.dumps({
             'mensagem': 'Requisição executada',
-            'horas': float(empregado.total_horas_extra)
+            'horas': float(empregado.total_horas_extra),
+            'utilizada': registro_hora_extra.utilizada
         })
 
         return HttpResponse(response, content_type='application/json')
+
