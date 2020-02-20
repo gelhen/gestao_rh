@@ -13,4 +13,4 @@ class Registro_hora_extraForm(ModelForm):
 
     class Meta:
         model = Registro_hora_extra
-        fields = ['motivo', 'funcionario', 'horas']
+        fields = ['motivo', 'funcionario', 'horas', 'utilizada']

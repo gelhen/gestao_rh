@@ -1,9 +1,8 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load bootstrap %}
 
 {% block main %}
-
-Edit
 
 <form method="post">
     {% csrf_token %}
@@ -15,7 +14,17 @@ Edit
         <a href="{% url 'delete_hora_extra' object.id %}" class="btn btn-danger">
             Deletar
         </a>
+        <button onclick="utilizouHoraExtra({{object.id}})" class="btn btn-info" type="button">
+            Utilizou Hora Extra
+        </button>
     {% endif %}
 </form>
 <br>
+<h1 id="horas_atualizadas">{{ object.funcionario.total_horas_extra }}</h1>
+<p id="mensagem"></p>
+{% endblock %}
+
+{% block static %}
+    <script src="{% static 'js/jquery.js' %}"></script>
+    <script src="{% static 'js/funcoes-ajax.js' %}"></script>
 {% endblock %}
