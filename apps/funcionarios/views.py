@@ -1,11 +1,14 @@
 from django.contrib.auth.models import User
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, DeleteView, CreateView
+from django.views.generic import UpdateView, DeleteView, CreateView, TemplateView
 from django.views.generic.list import ListView
 from apps.funcionarios.models import Funcionario
 import io
 from django.http import FileResponse, HttpResponse
 from reportlab.pdfgen import canvas
+import xhtml2pdf.pisa as pisa
+from django.template.loader import get_template
+from django.views import View
 
 class FuncionariosList(ListView):
     model = Funcionario
@@ -67,3 +70,35 @@ def relatorio_funcionarios(request):
     response.write(pdf)
 
     return response
+
+
+class Render:
+
+    @staticmethod
+    def render(path: str, params: dict, filename: str):
+        template = get_template(path)
+        html = template.render(params)
+        response = io.BytesIO()
+        pdf = pisa.pisaDocument(
+            io.BytesIO(html.encode('UTF-8')), response)
+        if not pdf.err:
+            response = HttpResponse(
+                response.getvalue(), content_type='application/pdf')
+            response['Content-Disposition'] = 'attachment;filename=%s.pdf' %filename
+            return response
+        else:
+            return HttpResponse("Error Rendering PDF", status=400)
+
+class Pdf(View):
+
+    def get(self, request):
+        params = {
+            'today': 'Variavel today',
+            'sales': 'Variavel sales',
+            'request': request
+        }
+        return Render.render('funcionarios/relatorio.html', params, 'myfile')
+
+
+class PdfDebug(TemplateView):
+    template_name = 'funcionarios/relatorio.html'

@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+<!-- css só funciona se estiver declarado aqui -->
+
+{% block main %}
+    <h1>Meu Relatório</h1>
+    <h2>{{ sales }}</h2>
+
+    <a href="{% url 'relatorio_funcionarios_html' %}" class="btn btn-info">
+        Relatório de Funcionários HTML
+    </a>
+{% endblock %}
