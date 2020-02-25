@@ -1,5 +1,7 @@
 import csv
 import json
+
+import xlwt
 from django.http import HttpResponse
 from django.views import View
 from django.urls import reverse_lazy
@@ -99,4 +101,39 @@ class ExportarParaCSV(View):
             writer.writerow([reg.id, reg.motivo, reg.funcionario,
                              reg.funcionario.total_horas_extra, reg.horas])
 
+        return response
+
+
+class ExportarParaExcel(View):
+    def get(self, request):
+        response = HttpResponse(content_type='application/ms-excel')
+        response['Content-Disposition'] = 'attachment; filename="users.xls"'
+
+        wb = xlwt.Workbook(encoding='utf-8')
+        ws = wb.add_sheet('Users')
+
+        row_num = 0
+
+        font_style = xlwt.XFStyle()
+        font_style.font.bold = True
+
+        columns = ['id', 'motivo', 'funcionario', 'Horas Restantes', 'Horas']
+
+        for col_num in range(len(columns)):
+            ws.write(row_num, col_num, columns[col_num], font_style)
+
+        font_style = xlwt.XFStyle()
+
+        registros = Registro_hora_extra.objects.filter(utilizada=False)
+
+        row_num = 1
+
+        for registro in registros:
+            ws.write(row_num, 0, registro.id, font_style)
+            ws.write(row_num, 1, registro.motivo, font_style)
+            ws.write(row_num, 2, registro.funcionario.nome, font_style)
+            ws.write(row_num, 3, registro.funcionario.total_horas_extra, font_style)
+            ws.write(row_num, 4, registro.horas, font_style)
+            row_num +=1
+        wb.save(response)
         return response
