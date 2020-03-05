@@ -80,7 +80,7 @@ uwsgi --http :8000 --module gestao_rh.wsgi
     sudo apt-get install nginx
     ````
 ## 10.2 configurar
-Criar arquivo uwsgi_params dentr da pasta do projeto
+Criar arquivo uwsgi_params dentro da pasta do projeto
 conteudo para o arquivo [uwsgi_params](https://github.com/nginx/nginx/blob/master/conf/uwsgi_params)
 ```
 vim uwsgi_params
@@ -144,7 +144,7 @@ server {
  ## 10.4 Criar link simbólico do arquivo do site
  
  ```
- sudo ln -s /etc/nginx/sites-available/gestao_rh.conf /etc/nginx/sites-enabled/gestao_rh.con
+ sudo ln -s /etc/nginx/sites-available/gestao_rh.conf /etc/nginx/sites-enabled/gestao_rh.conf
  ```
 
 ## 10.4 Incluir o STATICROOT no settings do projeto
@@ -176,9 +176,9 @@ server unix:///path/to/your/mysite/mysite.sock; # for a file socket
 uwsgi --socket gestao_rh/mysite.sock --wsgi-file test.py
 
 ````
-case apresente erro acrescentar a 
+caso apresente erro acrescentar a 
 `--chmod-socket=666 # (very permissive)` ou `--chmod-socket=666 # (very permissive)` 
-no fina do comendo
+no fina do comando
 
 ## 11 Roddar aplicação DJango
 
