@@ -1,45 +1,45 @@
 
-1- Atualizar pacotes 
+####1- Atualizar pacotes 
 ` 
 
 ` 
  sudo apt-get update && sudo apt-get upgrad
 `
 
-2- Criar .venv
+####2- Criar .venv
 caso não esteja instalado o virtual env `sudo apt-get install python3-venv` 
  
 ```
 python3 -m venv .venv
 ```
 
-3- Ativar a venv
+####3- Ativar a venv
 
 ```
 source .venv/bin/activate
 ```
 
-4- Seria criar projeto, como já está criado,  fazer o clone do projeto git
+####4- Seria criar projeto, como já está criado,  fazer o clone do projeto git
 
 ```git
 git clone https://github.com/gelhen/gestao_rh.git
 ```
 
-5- Instalar dependencias
+####5- Instalar dependencias
 
 ````
 pip install -r requirements.txt
 ````
 
-6- Liberar acesso na porta 8080 
+####6- Liberar acesso na porta 8080 
 
-7- Acessar 
+####7- Acessar 
 
 ````
 54.196.4.161:8080
 ````
 
-6-Instalar WSGI
+####6-Instalar WSGI
   wsgi dentro da virtualenv não deu certo, foi instaldo no paython so systema
   [documentação WSGI](https://uwsgi-docs.readthedocs.io/en/latest/tutorials/Django_and_nginx.html)
   Caso tenha erro [instalação WSGI](https://uwsgi-docs.readthedocs.io/en/latest/Install.html)
@@ -53,7 +53,7 @@ pip install wheel
 pip install uwsgi
 ````
 
-7- Criar um teste test.py
+####7- Criar um teste test.py
 
 ````python
 def application(env, start_response):
@@ -61,25 +61,25 @@ def application(env, start_response):
     return [b"Hello World"] # python3
     #return ["Hello World"] # python2
 ````
-8- Testar 
+####8- Testar 
 
 ````
 uwsgi --http :8000 --wsgi-file test.py
 ````
-9- Testar o projeto
+####9- Testar o projeto
 
 ````
 uwsgi --http :8000 --module gestao_rh.wsgi
 ````
 
-# 10 Configurar Nginx
+####10 Configurar Nginx
 
-## 10.1 Instalar
+###### 10.1 Instalar
 
     ````
     sudo apt-get install nginx
     ````
-## 10.2 configurar
+###### 10.2 configurar
 Criar arquivo uwsgi_params dentro da pasta do projeto
 conteudo para o arquivo [uwsgi_params](https://github.com/nginx/nginx/blob/master/conf/uwsgi_params)
 ```
@@ -103,7 +103,7 @@ uwsgi_param  SERVER_PORT        $server_port;
 uwsgi_param  SERVER_NAME        $server_name;
 ```
 
-##10.3 Criar aquivo do site
+###### 10.3 Criar aquivo do site
  Nome do arquivo gestao_rh.conf no diretório /etc/nginx/sites-available/
  Substituir os caminhos pelo PATH do projeto
 
@@ -141,28 +141,28 @@ server {
     }
 }
 ````
- ## 10.4 Criar link simbólico do arquivo do site
+###### 10.4 Criar link simbólico do arquivo do site
  
  ```
  sudo ln -s /etc/nginx/sites-available/gestao_rh.conf /etc/nginx/sites-enabled/gestao_rh.conf
  ```
 
-## 10.4 Incluir o STATICROOT no settings do projeto
+###### 10.4 Incluir o STATICROOT no settings do projeto
 
 ````
 STATIC_ROOT = os.path.join(BASE_DIR, "static/")
 ````
-##### 10.4.1
+######### 10.4.1
 ````
 python manage.py collectstatic
 ````
 
-##10.5 Restart nginx:
+###### 10.5 Restart nginx:
 
 ```
 sudo /etc/init.d/nginx restart
 ```
-## 10.6 Testar com Unix sockets
+###### 10.6 Testar com Unix sockets
 No arquivo gestao_rh.conf, descomentar a linha server unix.....
 e comentar a server 127.0.0.1....
 
@@ -170,7 +170,7 @@ e comentar a server 127.0.0.1....
 server unix:///path/to/your/mysite/mysite.sock; # for a file socket
 # server 127.0.0.1:8001; # for a web port socket (we'll use this first)
 ````
-#### 10.6.1 Testar 
+###### 10.6.1 Testar 
 
 ````
 uwsgi --socket gestao_rh/mysite.sock --wsgi-file test.py
@@ -180,12 +180,12 @@ caso apresente erro acrescentar a
 `--chmod-socket=666 # (very permissive)` ou `--chmod-socket=666 # (very permissive)` 
 no fina do comando
 
-## 11 Roddar aplicação DJango
+#### 11 Roddar aplicação DJango
 
 ````
     uwsgi --socket mysite.sock --module gestao_rh.wsgi --chmod-socket=666
 ````
-## 12 Criar arquivo de inicialização
+#### 12 Criar arquivo de inicialização
 
 Dentro da pasta do projeto, criar um arquivo com o nome uwsgi.ini
 
@@ -202,13 +202,13 @@ vacuum          = true
 chmod-socket    = 666
 ``` 
 
-## 13 Teste para rodar o projeto
+#### 13 Teste para rodar o projeto
 
 ```
 uwsgi --ini uwsgi.ini
 ```
 
-## 14 Configurando o systemctl para start no boot
+#### 14 Configurando o systemctl para start no boot
 
 Na pasta raiz /home/ubuntu, criar um arquivo, uwsgi.sh
 
@@ -227,6 +227,7 @@ com o conteúdo abaixo.
 ````
 [Unit]
 Description=uWSGI modo Emperor
+#inicia depois que a rede ligar
 After=network.target
 
 [Service]
@@ -252,3 +253,68 @@ Por fim iniciar o serviço
 ````
 systemctl start gestao_rh.service
 ````
+
+#### 15 Configuração do Celery
+
+[Documentoção](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#using-celery-with-django)
+
+Criar arquivo ../gestao_rg/gestao_rg/celery.py, arquivo deve ficar ao lado
+do settings.py
+
+````python
+from __future__ import absolute_import, unicode_literals
+import os
+from celery import Celery
+
+# set the default Django settings module for the 'celery' program.
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestao_rh.settings')
+
+app = Celery('gestao_rh')
+
+app.config_from_object('django.conf:settings', namespace='CELERY')
+
+app.autodiscover_tasks()
+
+
+@app.task(bind=True)
+def debug_task(self):
+    print('Request: {0!r}'.format(self.request))
+````
+
+No arquivo __init__.py que fica dentro da pasta ../gestao_rg/gestao_rg/, inserir 
+o conteudo
+
+````python
+from __future__ import absolute_import, unicode_literals
+from .celery import app as celery_app
+
+
+__all__ = ('celery_app',)
+
+````
+
+_**app.autodiscover_tasks()**_ automaticamente irá buscar por tasks.py dentro de cada app
+instalada no projeto.
+
+###### 15.1 Extenção para visualizar as tarfas no admin
+
+pip install django-celery-results
+
+Adicionar no settings
+
+````python
+INSTALLED_APPS = (
+    ...,
+    'django_celery_results',
+)
+````
+
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_BROKER_URL = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
+
+[Mais configurações](https://medium.com/@markgituma/using-django-2-with-celery-and-redis-21343284827c) 
+
+Executar migrate
