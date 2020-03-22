@@ -1,7 +1,6 @@
 from __future__ import absolute_import, unicode_literals
 from celery import shared_task
 from django.core.mail import send_mail
-
 from apps.funcionarios.models import Funcionario
 
 
@@ -26,8 +25,8 @@ def send_relatorio():
     send_mail(
         'Reatório Celery',
         'Relatorio geral de funcionario %f ' % total_funcionario,
-        'gelhen@gmail.com',
+        'ti@tozzoalimentos.com.br',
         ['gelhen@gmail.com'],
-        fail_silently=False,
+        fail_silently=False
     )
     return True
