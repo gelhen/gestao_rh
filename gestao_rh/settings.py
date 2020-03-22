@@ -148,3 +148,11 @@ CELERY_BROKER_URL = 'redis://localhost:6379'
 CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TASK_SERIALIZER = 'json'
+
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = "localhost"
+EMAIL_PORT = "25"
+EMAIL_USE_TLS = "False"
+EMAIL_HOST_USER = ""
+EMAIL_HOST_PASSWORD = ""

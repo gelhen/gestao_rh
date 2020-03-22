@@ -324,3 +324,8 @@ Instalar o redis
 ``sudo apt-get redis``
 
 Redis vai rodar local na porta 6379
+
+Para testar rodar 
+``
+celery -A gestao_rg worker -l info
+``
