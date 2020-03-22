@@ -151,8 +151,8 @@ CELERY_TASK_SERIALIZER = 'json'
 
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = "mail.tozzoalimentos.com.br"
-EMAIL_PORT = 465
+EMAIL_HOST = "localhost"
+EMAIL_PORT = 25
 EMAIL_USE_TLS = False
-EMAIL_HOST_USER = "ti@tozzoalimentos.com.br"
+EMAIL_HOST_USER = ""
 EMAIL_HOST_PASSWORD = ""
