@@ -25,7 +25,7 @@ def send_relatorio():
     send_mail(
         'Reatório Celery',
         'Relatorio geral de funcionario %f ' % total_funcionario,
-        'ti@tozzoalimentos.com.br',
+        'gelhen@gmail.com',
         ['gelhen@gmail.com'],
         fail_silently=False
     )
