@@ -256,7 +256,7 @@ systemctl start gestao_rh.service
 
 #### 15 Configuração do Celery
 
-[Documentoção](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#using-celery-with-django)
+[Documentação](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#using-celery-with-django)
 
 Criar arquivo ../gestao_rg/gestao_rg/celery.py, arquivo deve ficar ao lado
 do settings.py
@@ -318,3 +318,9 @@ CELERY_TASK_SERIALIZER = 'json'
 [Mais configurações](https://medium.com/@markgituma/using-django-2-with-celery-and-redis-21343284827c) 
 
 Executar migrate
+
+Instalar o redis
+
+``sudo apt-get redis``
+
+Redis vai rodar local na porta 6379
