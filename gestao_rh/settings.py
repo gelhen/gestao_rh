@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'apps.core',
     'bootstrapform',
     'django_celery_results',
+    'django_celery_beat',
 ]
 
 MIDDLEWARE = [
@@ -151,8 +152,8 @@ CELERY_TASK_SERIALIZER = 'json'
 
 
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_HOST = "localhost"
-EMAIL_PORT = 1025
-EMAIL_USE_TLS = False
-EMAIL_HOST_USER = ""
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "gelhen@gmail.com"
 EMAIL_HOST_PASSWORD = ""

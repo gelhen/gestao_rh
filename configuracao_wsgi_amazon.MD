@@ -327,5 +327,44 @@ Redis vai rodar local na porta 6379
 
 Para testar rodar 
 ``
-celery -A gestao_rg worker -l info
+celery -A gestao_rh worker -l info
+``
+
+No windows
+[Download Redis](https://github.com/rgl/redis/downloads) 
+``
+celery -A gestao_rh worker  --pool=solo -l info
+``
+
+#### Tarefas Periódicas
+
+[Documentação](https://docs.celeryproject.org/en/stable/userguide/periodic-tasks.html)
+
+Para inserir tarefas pelo Admin, instalar o módulo django-celery-beat
+
+``pip install django-celery-beat``
+
+Incluir no INSTALLED_APPS
+
+````python
+INSTALLED_APPS = (
+    ...,
+    'django_celery_beat',
+)
+````
+
+Aplicar as migrações
+
+``python manage.py migrate``
+
+Rodar no Linus
+
+``
+celery -A gestao_rh beat
+``
+
+Para rodar no Windows
+
+``
+celery -A gestao_rh beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 ``

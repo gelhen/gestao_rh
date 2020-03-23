@@ -22,7 +22,7 @@ def xsum(numbers):
 @shared_task
 def send_relatorio():
     total_funcionario = Funcionario.objects.all().count()
-    send_mail(
+    t = send_mail(
         'Reatório Celery',
         'Relatorio geral de funcionario %f ' % total_funcionario,
         'gelhen@gmail.com',
