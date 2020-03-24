@@ -357,10 +357,15 @@ Aplicar as migrações
 
 ``python manage.py migrate``
 
-Rodar no Linus
+Rodar no Linux
 
 ``
 celery -A gestao_rh beat
+``
+Para rodar os dois processos Worjer e o Beat no linux
+
+``
+celery -A gestao_rh -B
 ``
 
 Para rodar no Windows
@@ -368,3 +373,4 @@ Para rodar no Windows
 ``
 celery -A gestao_rh beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 ``
+
