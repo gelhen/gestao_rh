@@ -390,7 +390,7 @@ User=andre
 Group=andre
 WorkingDirectory=/home/andre/gestao_rh
 ExecStart=/bin/sh -c '/home/andre/gestao_rh/.venv/bin/celery -A gestao_rh beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler &'
-ExecStop=bin/kill -s TERM $MAINPID
+ExecStop=/bin/kill -s TERM $MAINPID
 
 [Install]
 WantedBy=default.target
