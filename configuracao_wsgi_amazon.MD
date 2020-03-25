@@ -365,7 +365,7 @@ celery -A gestao_rh beat
 Para rodar os dois processos Worjer e o Beat no linux
 
 ``
-celery -A gestao_rh -B
+celery -A gestao_rh -B --scheduler django_celery_beat.schedulers:DatabaseScheduler
 ``
 
 Para rodar no Windows
@@ -374,3 +374,40 @@ Para rodar no Windows
 celery -A gestao_rh beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
 ``
 
+Iniciar Celery no systemctl
+Criar um arquivo celery.service dentro do diretório /etc/systemd/system
+com o conteúdo abaixo.
+obs: & no comando ExcStart é para não dar timeout, ele executa e larga o terminal
+````
+[Unit]
+Description=Celery Service
+#inicia depois que a rede ligar
+After=network.target
+
+[Service]
+Type=forking
+User=andre
+Group=andre
+WorkingDirectory=/home/andre/gestao_rh
+ExecStart=/bin/sh -c '/home/andre/gestao_rh/.venv/bin/celery -A gestao_rh beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler &'
+ExecStop=bin/kill -s TERM $MAINPID
+
+[Install]
+WantedBy=default.target
+
+````
+````
+sudo vim /etc/systemd/system/celery.service
+sudo chmod 666 /etc/systemd/system/celery.service
+````
+Reload no processo
+Vai pedir a senha do ubuntu, para teste cadastrei senha 123456
+
+````
+systemctl daemon-reload
+systemctl enable celery.service
+````
+Por fim iniciar o serviço
+````
+systemctl start celery.service
+````
