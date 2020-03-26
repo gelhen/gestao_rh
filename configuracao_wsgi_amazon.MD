@@ -362,7 +362,7 @@ Rodar no Linux
 ``
 celery -A gestao_rh beat
 ``
-Para rodar os dois processos Worjer e o Beat no linux
+Para rodar os dois processos Worker e o Beat no linux
 
 ``
 celery -A gestao_rh -B --scheduler django_celery_beat.schedulers:DatabaseScheduler
