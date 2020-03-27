@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     'bootstrapform',
     'django_celery_results',
     'django_celery_beat',
+    'apps.app_antiga',
 ]
 
 MIDDLEWARE = [
@@ -88,7 +89,12 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    },
+    'antigo': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db_antigo.sqlite3'),
     }
+
 }
 
 
@@ -157,3 +163,6 @@ EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "gelhen@gmail.com"
 EMAIL_HOST_PASSWORD = ""
+
+
+DATABASE_ROUTERS = ['gestao_rh.DBRoutes.DBRoutes']
