@@ -93,6 +93,14 @@ DATABASES = {
     'antigo': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db_antigo.sqlite3'),
+    },
+    'postgres':{
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'curso3',
+        'USER': 'user3',
+        'PASSWORD': 'user3',
+        'HOST': '192.168.0.220',
+        'PORT': ''
     }
 
 }

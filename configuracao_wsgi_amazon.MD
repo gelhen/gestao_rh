@@ -336,7 +336,7 @@ No windows
 celery -A gestao_rh worker  --pool=solo -l info
 ``
 
-#### Tarefas Periódicas
+###### 15.2 Tarefas Periódicas
 
 [Documentação](https://docs.celeryproject.org/en/stable/userguide/periodic-tasks.html)
 
@@ -411,3 +411,64 @@ Por fim iniciar o serviço
 ````
 systemctl start celery.service
 ````
+
+
+#### 16 Multiplos Bancos de Dados
+
+Criar outo banco de dados 
+
+Criar arquivo de rotas para o banco na pasta do projeto, junto com o settings.
+Conteudo do arquivo de rotas
+
+````python
+class DBRoutes:
+    def db_for_read(self, model, **hints):
+        if model._meta.app_label == 'app_antiga':
+            return 'antigo'
+        return None
+
+    def db_for_write(self, model, **hints):
+        if model._meta.app_label == 'app_antiga':
+            return 'antigo'
+        return None
+
+    def allow_relation(self, obj1, obj2, **hints):
+        if obj1._meta.app_label == 'app_antiga' or \
+                obj2._meta.app_label == 'app_antiga':
+            return True
+        return None
+
+    def allow_migrate(self, db, app_label, model_name=None, **hints):
+        if app_label == 'app_antiga':
+            return db == 'antigo'
+        return None
+
+````
+
+Registrar o arquifo de rotas no settings
+
+````python
+
+DATABASE_ROUTERS = ['gestao_rh.DBRoutes.DBRoutes']
+
+````
+
+Instalar o Postgresql no linux
+
+````
+sudo apt-get update
+sudo apt-get install python-dev libpq-dev postgresql postgresql-contrib
+
+#acessar com o usuario postgres
+sudo su - postgres
+
+psql
+
+CREATE DATABASE 'gestao_rh';
+CREATE USER user_gestao WITH PASSWORD 'gestao(2020)';
+GRANT ALL PRIVILEGES ON DATABASE gestao_rh TO user_gestao 
+
+
+pip install psycopg2-binary
+````
+
