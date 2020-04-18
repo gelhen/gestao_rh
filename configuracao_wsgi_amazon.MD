@@ -464,7 +464,7 @@ sudo su - postgres
 
 psql
 
-CREATE DATABASE 'gestao_rh';
+CREATE DATABASE gestao_rh;
 CREATE USER user_gestao WITH PASSWORD 'gestao(2020)';
 GRANT ALL PRIVILEGES ON DATABASE gestao_rh TO user_gestao 
 

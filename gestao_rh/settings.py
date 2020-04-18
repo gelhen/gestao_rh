@@ -96,13 +96,12 @@ DATABASES = {
     },
     'postgres':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'curso3',
-        'USER': 'user3',
-        'PASSWORD': 'user3',
-        'HOST': '192.168.0.220',
-        'PORT': ''
-    }
-
+        'NAME': 'gestao_rg',
+        'USER': 'user_gestao',
+        'PASSWORD': 'gestao(2020)',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    },
 }
 
 
