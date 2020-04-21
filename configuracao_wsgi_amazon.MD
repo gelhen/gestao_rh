@@ -415,6 +415,8 @@ systemctl start celery.service
 
 #### 16 Multiplos Bancos de Dados
 
+[Docomuentação multipe-db django](https://docs.djangoproject.com/en/3.0/topics/db/multi-db/)
+
 Criar outo banco de dados 
 
 Criar arquivo de rotas para o banco na pasta do projeto, junto com o settings.
@@ -472,3 +474,8 @@ GRANT ALL PRIVILEGES ON DATABASE gestao_rh TO user_gestao
 pip install psycopg2-binary
 ````
 
+Executando migration para banco especifico
+
+``
+./manage.py migrate --database=users
+``

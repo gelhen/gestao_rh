@@ -16,7 +16,8 @@ from .tasks import send_relatorio
 def home(request):
     data = {}
     data['usuario'] = request.user
-    funcionario = request.user.funcionario
+    user_id = request.user.id
+    funcionario = Funcionario.objects.get(user=user_id)
     data['total_funcionarios'] = funcionario.empresa.total_funcionarios
     data['total_funcionarios_ferias'] = funcionario.empresa.total_funcionarios_ferias
     data['total_funcionarios_doc_pendentes'] = funcionario.empresa.total_funcionarios_doc_pendente

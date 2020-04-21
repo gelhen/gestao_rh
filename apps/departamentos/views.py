@@ -3,6 +3,7 @@ from django.urls import reverse_lazy
 from django.views.generic import CreateView, UpdateView, DeleteView
 from django.views.generic.list import ListView
 from apps.departamentos.models import Departamento
+from apps.funcionarios.models import Funcionario
 
 
 class DeparatamentosList(ListView):
@@ -10,7 +11,8 @@ class DeparatamentosList(ListView):
     # paginate_by = 10
 
     def get_queryset(self):
-        empresa_logada = self.request.user.funcionario.empresa
+        user_id = self.request.user.id
+        empresa_logada = Funcionario.objects.get(user=user_id).empresa_id
         return Departamento.objects.filter(empresa=empresa_logada)
 
 class DepartamentoCreate(CreateView):

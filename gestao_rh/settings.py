@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'gestao_rh.wsgi.application'
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
 
 DATABASES = {
-    'default': {
+    'atual': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     },
@@ -94,9 +94,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': os.path.join(BASE_DIR, 'db_antigo.sqlite3'),
     },
-    'postgres':{
+    'default':{
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'gestao_rg',
+        'NAME': 'gestao_rh',
         'USER': 'user_gestao',
         'PASSWORD': 'gestao(2020)',
         'HOST': 'localhost',

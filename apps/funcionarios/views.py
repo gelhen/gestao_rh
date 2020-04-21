@@ -15,7 +15,10 @@ class FuncionariosList(ListView):
     # paginate_by = 10
 
     def get_queryset(self):
-        empresa_logada = self.request.user.funcionario.empresa
+        #pegar o is do usuario
+        #pelo id buscar a empresa
+        user_id = self.request.user.id
+        empresa_logada = Funcionario.objects.get(user=user_id).empresa_id
         return Funcionario.objects.filter(empresa=empresa_logada)
 
 class FuncionarioEdit(UpdateView):
