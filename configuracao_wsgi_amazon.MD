@@ -258,6 +258,10 @@ systemctl start gestao_rh.service
 
 [Documentação](https://docs.celeryproject.org/en/stable/django/first-steps-with-django.html#using-celery-with-django)
 
+Instalar o celery
+```console
+pip install celery
+```
 Criar arquivo ../gestao_rg/gestao_rg/celery.py, arquivo deve ficar ao lado
 do settings.py
 
@@ -293,12 +297,17 @@ __all__ = ('celery_app',)
 
 ````
 
+As tasks podem ser criadas dentro de cada app do projeto com o nome task.py. 
 _**app.autodiscover_tasks()**_ automaticamente irá buscar por tasks.py dentro de cada app
 instalada no projeto.
 
-###### 15.1 Extenção para visualizar as tarfas no admin
+###### 15.1 Extenção para visualizar as tarefas no admin
 
+
+```console
 pip install django-celery-results
+pip install redis
+```
 
 Adicionar no settings
 
@@ -308,6 +317,12 @@ INSTALLED_APPS = (
     'django_celery_results',
 )
 ````
+
+Executar o migrate
+```console
+python manager.py migrate django_celery_result
+```
+
 
 CELERY_RESULT_BACKEND = 'django-db'
 CELERY_BROKER_URL = 'redis://localhost:6379'
@@ -319,11 +334,18 @@ CELERY_TASK_SERIALIZER = 'json'
 
 Executar migrate
 
-Instalar o redis
+###### 15.2 Instalar o redis
 
-``sudo apt-get redis``
+```console
+sudo apt-get redis
+```
+Para conferir se está rodando
 
-Redis vai rodar local na porta 6379
+```console
+sudo /etc/init.d/redis-server status
+```
+
+Redis vai rodar local na porta 6379, 127.0.0.1:6379
 
 Para testar rodar 
 ``
@@ -331,12 +353,13 @@ celery -A gestao_rh worker -l info
 ``
 
 No windows
+
 [Download Redis](https://github.com/rgl/redis/downloads) 
 ``
 celery -A gestao_rh worker  --pool=solo -l info
 ``
 
-###### 15.2 Tarefas Periódicas
+###### 15.3 Tarefas Periódicas
 
 [Documentação](https://docs.celeryproject.org/en/stable/userguide/periodic-tasks.html)
 
