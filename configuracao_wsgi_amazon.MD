@@ -262,7 +262,7 @@ Instalar o celery
 ```console
 pip install celery
 ```
-Criar arquivo ../gestao_rg/gestao_rg/celery.py, arquivo deve ficar ao lado
+Criar arquivo ../gestao_rh/gestao_rh/celery.py, arquivo deve ficar ao lado
 do settings.py
 
 ````python
@@ -285,7 +285,7 @@ def debug_task(self):
     print('Request: {0!r}'.format(self.request))
 ````
 
-No arquivo __init__.py que fica dentro da pasta ../gestao_rg/gestao_rg/, inserir 
+No arquivo __init__.py que fica dentro da pasta ../gestao_rh/gestao_rh/, inserir 
 o conteudo
 
 ````python
@@ -320,7 +320,7 @@ INSTALLED_APPS = (
 
 Executar o migrate
 ```console
-python manager.py migrate django_celery_result
+python manage.py migrate django_celery_result
 ```
 
 
