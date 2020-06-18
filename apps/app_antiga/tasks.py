@@ -20,11 +20,7 @@ def xsum(numbers):
 
 
 @shared_task
-def send_relatorio(*args, **kwargs):
-    doc = open('c:\\teste.txt', 'w')
-    doc.writelines("TESte")
-    doc.close()
-
+def send_relatorio():
     total_funcionario = Funcionario.objects.all().count()
     t = send_mail(
         'Reatório Celery',

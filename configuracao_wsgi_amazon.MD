@@ -380,18 +380,25 @@ Aplicar as migrações
 
 ``python manage.py migrate``
 
-Rodar no Linux
+Rodar normalmente  Linux
 
 ``
-celery -A gestao_rh beat
+celery -A gestao_rh -l info
 ``
+
+Rodar normalmente no Windows 
+
+``
+celery -A gestao_rh worker  --pool=solo -l info
+``
+
 Para rodar os dois processos Worker e o Beat no linux
 
 ``
-celery -A gestao_rh -B --scheduler django_celery_beat.schedulers:DatabaseScheduler
+celery -A gestao_rh worker -l info -B --scheduler django_celery_beat.schedulers:DatabaseScheduler
 ``
 
-Para rodar no Windows
+Para rodar os dois processos no Windows
 
 ``
 celery -A gestao_rh beat -l info --scheduler django_celery_beat.schedulers:DatabaseScheduler
